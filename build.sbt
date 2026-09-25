@@ -51,6 +51,10 @@ lazy val domain = project
   .enablePlugins(ScalaJSPlugin)
   .dependsOn(coreDomain)
   .settings(commonSettings)
+  .settings(
+    libraryDependencies += "org.typelevel" %% "cats-core" % "2.13.0",
+    libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.19" % Test,
+  )
 
 lazy val usecase = project
   .in(file("modules/usecase"))
