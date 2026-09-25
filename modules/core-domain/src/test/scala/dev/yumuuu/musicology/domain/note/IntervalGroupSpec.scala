@@ -18,11 +18,12 @@ final class IntervalGroupSpec extends AnyFlatSpec with FlatSpecDiscipline with C
     for
       fifths <- Gen.choose(-100, 100)
       octave <- Gen.choose(-100, 100)
-    yield Interval(fifths, octave),
+    yield Interval(fifths, octave)
   )
 
-  given Cogen[Interval] = Cogen[(Int, Int)].contramap(interval => (interval.fifths, interval.octave))
+  given Cogen[Interval] =
+    Cogen[(Int, Int)].contramap(interval => (interval.fifths, interval.octave))
 
-  checkAll("音程の操作は群をなす", GroupTests[Interval].group)(
-    using summon[PropertyCheckConfiguration],
+  checkAll("音程の操作は群をなす", GroupTests[Interval].group)(using
+    summon[PropertyCheckConfiguration]
   )

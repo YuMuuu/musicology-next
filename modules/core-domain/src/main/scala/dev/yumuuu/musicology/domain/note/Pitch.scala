@@ -19,7 +19,7 @@ final case class Pitch(fifths: Int, octave: Int):
 
   def sharp(): Pitch = this + Interval(7, -4)
 
-  //fを定義してflatMapにしたい
+  // fを定義してflatMapにしたい
   def flat(): Pitch = this + Interval(-7, 4)
 
 object Pitch:
@@ -36,7 +36,7 @@ object Pitch:
   val bb4 = Pitch(-2, 2)
   val f4 = Pitch(-1, 1)
 
-  val c4 = Pitch(0, 0) //基準音
+  val c4 = Pitch(0, 0) // 基準音
 
   val g4 = Pitch(1, 0)
   val d4 = Pitch(2, -1)
