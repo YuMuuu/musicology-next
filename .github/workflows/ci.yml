@@ -45,7 +45,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
 
-  scala-lint:
+  scala-test-and-lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -62,3 +62,4 @@ jobs:
           key: ${{ runner.os }}-${{ runner.arch }}-sbt-${{ hashFiles('build.sbt', 'project/**', 'mise.toml') }}
       - run: sbt scalafmtCheckAll
       - run: sbt 'scalafixAll --check'
+      - run: sbt test
