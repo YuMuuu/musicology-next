@@ -8,15 +8,57 @@ permissions:
   contents: read
 
 jobs:
-  check:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
       - uses: jdx/mise-action@v4
+        with:
+          install_args: node pnpm java sbt
+      - uses: actions/cache@v6
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ runner.arch }}-node-modules-${{ hashFiles('pnpm-lock.yaml', 'mise.toml') }}
+      - uses: actions/cache@v6
+        with:
+          path: |
+            ~/.cache/coursier
+            ~/.cache/sbt/boot
+            ~/.ivy2/cache
+            ~/.sbt/boot
+          key: ${{ runner.os }}-${{ runner.arch }}-sbt-${{ hashFiles('build.sbt', 'project/**', 'mise.toml') }}
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - run: sbt compile
+
+  node-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: jdx/mise-action@v4
+        with:
+          install_args: node pnpm
       - uses: actions/cache@v6
         with:
           path: node_modules
           key: ${{ runner.os }}-${{ runner.arch }}-node-modules-${{ hashFiles('pnpm-lock.yaml', 'mise.toml') }}
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
-      - run: pnpm build
+
+  scala-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: jdx/mise-action@v4
+        with:
+          install_args: java sbt
+      - uses: actions/cache@v6
+        with:
+          path: |
+            ~/.cache/coursier
+            ~/.cache/sbt/boot
+            ~/.ivy2/cache
+            ~/.sbt/boot
+          key: ${{ runner.os }}-${{ runner.arch }}-sbt-${{ hashFiles('build.sbt', 'project/**', 'mise.toml') }}
+      - run: sbt scalafmtCheckAll
+      - run: sbt 'scalafixAll --check'
