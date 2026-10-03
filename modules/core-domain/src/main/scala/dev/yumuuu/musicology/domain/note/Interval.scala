@@ -20,7 +20,8 @@ final case class Interval(fifths: Int, octave: Int):
   def isSameFifths(that: Interval): Boolean = Eq[Int].eqv(this.fifths, that.fifths)
 
 object Interval:
-  val unit = Interval(0, 0) // 基準音
+  lazy val unit = unis // 基準音
+  val unis = Interval(0, 0) // 完全1度
 
   val oneOctaveUp = Interval(0, 1)
   val oneOctaveDown = Interval(0, -1)
