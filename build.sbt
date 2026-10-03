@@ -53,6 +53,7 @@ lazy val domain = project
   .settings(commonSettings)
   .settings(
     libraryDependencies += "org.typelevel" %% "cats-core" % "2.13.0",
+    libraryDependencies += "org.typelevel" %% "discipline-scalatest" % "2.3.0" % Test,
     libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.19" % Test,
   )
 
