@@ -22,7 +22,14 @@ final case class Pitch(fifths: Int, octave: Int):
   // fを定義してflatMapにしたい
   def flat(): Pitch = this + Interval(-7, 4)
 
+  def doubleSharp(): Pitch = sharp().sharp()
+
+  def doubleFlat(): Pitch = flat().flat()
+
 object Pitch:
+  val fbb4 = Pitch(-15, 9)
+  val cbb4 = Pitch(-14, 8)
+  val gbb4 = Pitch(-13, 8)
   val dbb4 = Pitch(-12, 7)
   val abb4 = Pitch(-11, 7)
   val ebb4 = Pitch(-10, 6)
@@ -50,4 +57,10 @@ object Pitch:
   val as4 = Pitch(10, -5)
   val es4 = Pitch(11, -6)
   val bs4 = Pitch(12, -6)
-//memo: 必要になったら足す
+  val fss4 = Pitch(13, -7)
+  val css4 = Pitch(14, -8)
+  val gss4 = Pitch(15, -8)
+  val dss4 = Pitch(16, -9)
+  val ass4 = Pitch(17, -9)
+  val ess4 = Pitch(18, -10)
+  val bss4 = Pitch(19, -10)
